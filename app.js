@@ -14,11 +14,9 @@ app.use(express.json()); // Parse JSON payloads
 app.use(express.urlencoded({ extended: true })); // Parse URL-encoded payloads
 
 
-
-
-mongoose.connect(process.env.MONGODB_URL, {
+mongoose.connect("mongodb://localhost:27017/shorturl", {
   useNewUrlParser: true,
-  useUnifiedTopology: true,
+  useUnifiedTopology: true, 
 })
   .then(() => console.log("Connected to MongoDB"))
   .catch((err) => console.error("MongoDB connection error:", err));
