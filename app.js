@@ -16,18 +16,18 @@ app.use(express.urlencoded({ extended: true })); // Parse URL-encoded payloads
 
 mongoose.connect("mongodb://localhost:27017/shorturl", {
   useNewUrlParser: true,
-  useUnifiedTopology: true, 
+  useUnifiedTopology: true,
 })
   .then(() => console.log("Connected to MongoDB"))
   .catch((err) => console.error("MongoDB connection error:", err));
 
 // Create a short URL
-  app.post("/shorten", async (req, res) => {
+app.post("/shorten", async (req, res) => {
   console.log("Request Body:", req.body); // Check if data is coming through
   const { long_url } = req.body;
   const short_code = shortid.generate();
   const newURL = new URL({ long_url, short_code });
-  
+
   try {
     await newURL.save();
     res.json({ short_url: `http://localhost:3000/${short_code}` });
@@ -57,6 +57,6 @@ app.get("/:short_code", async (req, res) => {
 });
 
 // Start the server
-app.listen( process.env.PORT||3000, () => {
+app.listen(process.env.PORT || 3000, () => {
   console.log("Server running on http://localhost:3000");
 });
